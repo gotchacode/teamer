@@ -7,21 +7,33 @@ class GithubUser extends Component {
   constructor(props) {
     super(props);
     this.user = this.props.user;
+    this.state = {
+      user: null
+    }
   }
 
   componentDidMount() {
+    const self = this;
     console.log('GithubUser did mount');
     if (!this.props.user) {
       return;
     } else {
       console.log(this.props.user);
+      const URL = `https://api.github.com/users/${this.props.user.login}`;
+      fetch(URL)
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          self.setState({user: json});
+        });
     }
   }
 
   render() {
     return (
       <div>
-        <h1>Hello {this.props.user.login}</h1>
+        <h1>Hello</h1>
+        <UserDetail key={this.props.user.id} user={this.state.user}></UserDetail>
       </div>
     );
   }
@@ -79,7 +91,7 @@ class App extends Component {
         <div className="container-fluid">
           <h1>Welcome to Github team viewer</h1>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
-          <div className="team-display-container container-fluid">
+          <div className="team-display-container row">
             <div className="col-4 sidebar"><TeamList teams={this.state.github}></TeamList></div>
             <div className="col-8 main">            
             { thinTeams && (
@@ -139,4 +151,13 @@ class TeamList extends Component {
   }
 }
 
+class UserDetail extends Component {
+  render() {
+    const user = this.props.user;
+    console.log('userdetail', user);
+    return(
+      'Hello'
+    );
+  }
+}
 
