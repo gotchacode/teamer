@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Link, Route} from 'react-router-dom';
 class GithubUser extends Component {
   constructor(props) {
     super(props);
-    this.user = this.props.user;
     this.state = {
       user: null
     }
@@ -14,11 +13,9 @@ class GithubUser extends Component {
 
   componentDidMount() {
     const self = this;
-    console.log('GithubUser did mount');
     if (!this.props.user) {
       return;
     } else {
-      console.log(this.props.user);
       const URL = `https://api.github.com/users/${this.props.user.login}`;
       fetch(URL)
         .then((response) => response.json())
@@ -32,8 +29,9 @@ class GithubUser extends Component {
   render() {
     return (
       <div>
-        <h1>Hello</h1>
-        <UserDetail key={this.props.user.id} user={this.state.user}></UserDetail>
+        <div>
+          {this.state.user && <UserDetail user={this.state.user}></UserDetail>}
+        </div>
       </div>
     );
   }
@@ -93,7 +91,7 @@ class App extends Component {
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
           <div className="team-display-container row">
             <div className="col-4 sidebar"><TeamList teams={this.state.github}></TeamList></div>
-            <div className="col-8 main">            
+            <div className="col-8 main">
             { thinTeams && (
                 <Route path="/u/:userId" render={({match})=> (
                   <GithubUser key={match.params.userId} user={thinTeams.find(g=> g.id === parseInt(match.params.userId, 10) )} />
@@ -156,7 +154,24 @@ class UserDetail extends Component {
     const user = this.props.user;
     console.log('userdetail', user);
     return(
-      'Hello'
+      <div>
+        <h1>
+          Hello {user.login}
+        </h1>
+        <p>
+          Bio: {user.bio}
+        </p>
+        <img src={user.avatar_url} alt={user.id}>
+        </img>
+        <p>
+          Github URL: <a href={user.html_url}>{user.html_url}</a>
+        </p>
+        <p>Type: {user.type}</p>
+        <p>Company: {user.company}</p>
+        <p>Blog: {user.blog}</p>
+        <p>Location: {user.location}</p>
+        <p>Open for Job: {user.hireable}</p>
+      </div>
     );
   }
 }
