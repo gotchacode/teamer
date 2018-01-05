@@ -16,7 +16,7 @@ class GithubUser extends Component {
     if (!this.props.user) {
       return;
     } else {
-      const URL = `https://api.github.com/users/${this.props.user.login}`;
+      const URL = `https://api.github.com/users/${this.props.user.login}?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
       fetch(URL)
         .then((response) => response.json())
         .then((json) => {
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   apiRequest(org) {
-    const githubAPIURL = `https://api.github.com/orgs/${org}/members?client_id=2ee21061ca9ec6085e38&&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
+    const githubAPIURL = `https://api.github.com/orgs/${org}/members?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
     const self = this;
     fetch(githubAPIURL).then(function (response) {
       return response.json();
@@ -86,7 +86,7 @@ class App extends Component {
     return (
       <Router>
         <div className="container-fluid">
-          <h1 class="app-header">Welcome to Teamer</h1>
+          <h1 className="app-header">Welcome to Teamer</h1>
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
           <div className="team-display-container row">
@@ -158,7 +158,7 @@ class UserDetail extends Component {
       <div>
         <h1>
           Hello {user.login}
-        </h1>  
+        </h1>
         { user.bio && <p>Bio: {user.bio} </p> }
         <img src={user.avatar_url} alt={user.id}>
         </img>
