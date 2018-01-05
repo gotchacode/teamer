@@ -39,7 +39,6 @@ class GithubUser extends Component {
 }
 
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -167,10 +166,10 @@ class UserDetail extends Component {
           Github URL: <a href={user.html_url}>{user.html_url}</a>
         </p>
         <p>Type: {user.type}</p>
-        <p>Company: {user.company}</p>
-        <p>Blog: {user.blog}</p>
-        <p>Location: {user.location}</p>
-        <p>Open for Job: {user.hireable}</p>
+        { user.company && <p>Company: {user.company}</p> }
+        { user.blog && <p>Blog: <a href={user.blog}>{user.blog}</a></p> }
+        { user.location && <p>Location: {user.location}</p> }
+        { user.hireable && <p>Open for Job: {user.hireable}</p> }
       </div>
     );
   }
