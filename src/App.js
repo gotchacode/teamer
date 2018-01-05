@@ -16,7 +16,7 @@ class GithubUser extends Component {
     if (!this.props.user) {
       return;
     } else {
-      const URL = `https://api.github.com/users/${this.props.user.login}`;
+      const URL = `https://api.github.com/users/${this.props.user.login}?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
       fetch(URL)
         .then((response) => response.json())
         .then((json) => {
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   apiRequest(org) {
-    const githubAPIURL = `https://api.github.com/orgs/${org}/members?client_id=2ee21061ca9ec6085e38&&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
+    const githubAPIURL = `https://api.github.com/orgs/${org}/members?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
     const self = this;
     fetch(githubAPIURL).then(function (response) {
       return response.json();
