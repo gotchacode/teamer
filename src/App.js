@@ -86,7 +86,7 @@ class App extends Component {
     return (
       <Router>
         <div className="container-fluid">
-          <h1 class="app-header">Welcome to Teamer</h1>
+          <h1 className="app-header">Welcome to Teamer</h1>
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
           <div className="team-display-container row">
