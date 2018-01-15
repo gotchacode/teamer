@@ -1,43 +1,10 @@
 import React, { Component } from 'react';
+import GithubUser from './GithubUser';
+import SearchInput from './SearchInput';
+import TeamList from './TeamList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route} from 'react-router-dom';
-
-class GithubUser extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    }
-  }
-
-  componentDidMount() {
-    const self = this;
-    if (!this.props.user) {
-      return;
-    } else {
-      const URL = `https://api.github.com/users/${this.props.user.login}?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
-      fetch(URL)
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          self.setState({user: json});
-        });
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <div>
-          {this.state.user && <UserDetail user={this.state.user}></UserDetail>}
-        </div>
-      </div>
-    );
-  }
-
-}
-
 
 class App extends Component {
   constructor(props) {
@@ -106,72 +73,4 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-class SearchInput extends Component  {
-  handleChange =  (event) => {
-    this.props.textChange(event);
-  };
-
-  render() {
-    return (
-      <div className="component-search-input">
-        <div>
-          <input className="form-control search-input pull-left" placeholder="eg: github" onChangeCapture={this.handleChange} />
-        </div>
-      </div>
-    )
-  }
-}
-
-class TeamList extends Component {
-  render() {
-    const teams = this.props.teams;
-    const teamListContainer = [];
-
-    if (teams) {
-      teams.forEach((member, key) => {
-        const avatar = member.avatar_url + '&s=30';
-        teamListContainer.push(
-          <li key={key}>
-            <Link to={`/u/${member.id}`}><img src={avatar} className="avatar-image" alt={member.id}></img>{member.login}</Link>
-          </li>
-        )
-      });
-    }
-
-    return(
-      <ul className="team-list">
-        {teamListContainer}
-      </ul>
-    );
-  }
-}
-
-class UserDetail extends Component {
-  render() {
-    const user = this.props.user;
-    const hireable = user.hireable ? 'Yes': 'No';
-    console.log('userdetail', user);
-    return(
-      <div>
-        <h1>
-          Hello {user.login}
-        </h1>  
-        { user.bio && <p>Bio: {user.bio} </p> }
-        <img src={user.avatar_url} alt={user.id}>
-        </img>
-        <p>
-          Github URL: <a href={user.html_url}>{user.html_url}</a>
-        </p>
-        <p>Type: {user.type}</p>
-        { user.company && <p>Company: {user.company}</p> }
-        { user.blog && <p>Blog: <a href={user.blog}>{user.blog}</a></p> }
-        { user.location && <p>Location: {user.location}</p> }
-        { user.hireable && <p>Open for Job: {hireable}</p> }
-      </div>
-    );
-  }
-}
 
