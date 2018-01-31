@@ -4,7 +4,7 @@ import SearchInput from './SearchInput';
 import TeamList from './TeamList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
