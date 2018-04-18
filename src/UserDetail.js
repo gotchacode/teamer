@@ -9,7 +9,7 @@ export default class UserDetail extends Component {
       <div>
         <h1>
           Hello {user.login}
-        </h1>  
+        </h1>
         { user.bio && <p>Bio: {user.bio} </p> }
         <img src={user.avatar_url} alt={user.id}>
         </img>
@@ -25,5 +25,5 @@ export default class UserDetail extends Component {
     );
   }
 }
-  
-  
+
+
