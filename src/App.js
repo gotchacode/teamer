@@ -9,35 +9,17 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 const REPOSITORY = gql`
-{
-  repository(owner: "vinitkumar", name: "node-twitter") {
-    pullRequest(number:208) {
-      commits(first: 200) {
-        edges {
-          node {
-            commit {
-              oid
-              message
-            }
-          }
+query($organization_name: String!) {
+    organization(login: $organization_name) {
+    members(first: 100) {
+      edges {
+        node {
+          name
+          avatarUrl
+          id
+          login
         }
-      }
-      comments(first: 10) {
-        edges {
-          node {
-            body
-            author {
-              login
-            }
-          }
-        }
-      }
-      reviews(first: 10) {
-        edges {
-          node {
-            state
-          }
-        }
+
       }
     }
   }
@@ -71,6 +53,7 @@ class App extends Component {
     // set it all empty when a new org is searched
     this.setState({'github': []});
     let org = event.target.value;
+    this.setState({orgName: org });
     this.apiRequest(org);
   }
 
@@ -88,6 +71,8 @@ class App extends Component {
 
       console.log(thinTeams);
     }
+    let organization_name = this.state.orgName;
+    console.log('orgName', this.state.orgName);
 
     return (
       <Router>
@@ -96,14 +81,15 @@ class App extends Component {
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
           <div className="team-display-container row">
-
-            <Query query={REPOSITORY} variables={{}}>
+            {this.state.orgName  &&
+            <Query query={REPOSITORY} variables={{ "organization_name": organization_name  }}>
               {({data, loading}) => (
                 loading ? <span>Loading data...</span> :
-                <p>data is here </p>
+
+                <div className="col-4 sidebar"><TeamList teams={data.organization.members.edges}></TeamList></div>
               )}
             </Query>
-            <div className="col-4 sidebar"><TeamList teams={this.state.github}></TeamList></div>
+            }
             <div className="col-8 main">
             { thinTeams && (
                 <Route path="/u/:userId" render={({match})=> (
