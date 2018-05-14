@@ -4,6 +4,8 @@
 
 Teamer is neat utility to look at Github organizations and their members details.
 
+![demo](https://cldup.com/hP2x4hEY9K.jpg)
+
 This project is built using following:
 
 
