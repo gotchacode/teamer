@@ -5,6 +5,45 @@ import TeamList from './TeamList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const REPOSITORY = gql`
+{
+  repository(owner: "vinitkumar", name: "node-twitter") {
+    pullRequest(number:208) {
+      commits(first: 200) {
+        edges {
+          node {
+            commit {
+              oid
+              message
+            }
+          }
+        }
+      }
+      comments(first: 10) {
+        edges {
+          node {
+            body
+            author {
+              login
+            }
+          }
+        }
+      }
+      reviews(first: 10) {
+        edges {
+          node {
+            state
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +96,13 @@ class App extends Component {
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
           <div className="team-display-container row">
+
+            <Query query={REPOSITORY} variables={{}}>
+              {({data, loading}) => (
+                loading ? <span>Loading data...</span> :
+                <p>data is here </p>
+              )}
+            </Query>
             <div className="col-4 sidebar"><TeamList teams={this.state.github}></TeamList></div>
             <div className="col-8 main">
             { thinTeams && (
