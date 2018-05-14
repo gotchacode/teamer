@@ -7,11 +7,16 @@ export default class TeamList extends Component {
     const teamListContainer = [];
 
     if (teams) {
-      teams.forEach((member, key) => {
-        const avatar = member.avatar_url + '&s=30';
+      //teams.forEach((node, key) => {
+      //  console.log(node.node.name);
+      //});
+
+      teams.forEach((node, key) => {
+        const avatar = node.node.avatarUrl + '&s=30';
+        let username = node.node.name ? node.node.name: node.node.login;
         teamListContainer.push(
           <li key={key}>
-            <Link to={`/u/${member.id}`}><img src={avatar} className="avatar-image" alt={member.id}></img>{member.login}</Link>
+            <Link to={`/u/${node.node.id}`}><img src={avatar} className="avatar-image" alt={node.node.id}></img>{username}</Link>
           </li>
         )
       });
