@@ -9,7 +9,7 @@ Teamer is neat utility to look at Github organizations and their members details
 This project is built using following:
 
 
-- Create React App for scafolding.
+- Create React App for scaffolding.
 - React
 - React Router
 - GraphQL
