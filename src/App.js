@@ -65,24 +65,15 @@ class App extends Component {
           <h1 className="app-header">Welcome to Teamer</h1>
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
-          <div className="team-display-container row">
             {this.state.orgName  &&
             <Query query={REPOSITORY} variables={{ "organization_name": organization_name  }}>
-              {({data, loading}) => (
-                loading ? <span>Loading data...</span> :
-
-                <div className="col-4 sidebar"><TeamList teams={data.organization.members.edges}></TeamList></div>
-              )}
+              {({data, loading}) => {
+                if (loading) return <span>Loading data...</span>
+                if (!loading) return <div className="team-display-container row"><div className="col-4 sidebar"><TeamList teams={data.organization.members.edges}></TeamList></div> <div className="col-8 main"> <Route path="/u/:userId" render={({match})=> (<GithubUser key={match.params.userId} user={data.organization.members.edges.find(g=> g.node.id === match.params.userId )} />
+                )} /></div></div>
+              }}
             </Query>
             }
-            <div className="col-8 main">
-            { thinTeams && (
-                <Route path="/u/:userId" render={({match})=> (
-                  <GithubUser key={match.params.userId} user={thinTeams.find(g=> g.id === parseInt(match.params.userId, 10) )} />
-                )} />
-            )}
-            </div>
-          </div>
         </div>
       </Router>
     );
