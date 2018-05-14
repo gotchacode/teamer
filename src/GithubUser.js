@@ -1,36 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import UserDetail from './UserDetail';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const USER = gql`
+query($id: ID!) {
+  node(id: $id) {
+    ... on User {
+      databaseId
+      login
+      id
+      name
+      avatarUrl
+      bio
+      company
+      email
+      location
+      isHireable
+      isDeveloperProgramMember
+      url
+      websiteUrl
+    }
+  }
+}
+`;
 
 export default class GithubUser extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    }
-  }
-
-  componentDidMount() {
-    const self = this;
-    if (!this.props.user) {
-      return;
-    } else {
-      const URL = `https://api.github.com/users/${this.props.user.login}?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
-      fetch(URL)
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          self.setState({user: json});
-        });
-    }
-  }
-
   render() {
+    debugger;
     return (
-      <div>
-        <div>
-          {this.state.user && <UserDetail user={this.state.user}></UserDetail>}
-        </div>
-      </div>
+      <Fragment>
+        { this.props.user &&
+        <Query query={USER} variables={{ "id": this.props.user.node.id }}>
+           {({data, error, loading}) => {
+            if (error) return <span>Something went wrong..!</span>
+            if (loading || !data) return <span>...Loading..</span>
+            if (!loading && data) return <UserDetail user={data.node} />
+           }}
+        </Query>
+        }
+        <p></p>
+      </Fragment>
     );
   }
 

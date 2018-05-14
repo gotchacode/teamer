@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
-const REPOSITORY = gql`
+const MEMBERS = gql`
 query($organization_name: String!) {
     organization(login: $organization_name) {
     members(first: 100) {
@@ -66,10 +66,10 @@ class App extends Component {
           <p> Discover teams on github, just search for the name. For eg: github</p>
           <SearchInput textChange={this.handleSearchChange.bind(this)}/>
             {this.state.orgName  &&
-            <Query query={REPOSITORY} variables={{ "organization_name": organization_name  }}>
+            <Query query={MEMBERS} variables={{ "organization_name": organization_name  }}>
               {({data, loading}) => {
                 if (loading) return <span>Loading data...</span>
-                if (!loading) return <div className="team-display-container row"><div className="col-4 sidebar"><TeamList teams={data.organization.members.edges}></TeamList></div> <div className="col-8 main"> <Route path="/u/:userId" render={({match})=> (<GithubUser key={match.params.userId} user={data.organization.members.edges.find(g=> g.node.id === match.params.userId )} />
+                if (!loading && data) return <div className="team-display-container row"><div className="col-4 sidebar"><TeamList teams={data.organization.members.edges}></TeamList></div> <div className="col-8 main"> <Route path="/u/:userId" render={({match})=> (<GithubUser key={match.params.userId} user={data.organization.members.edges.find(g=> g.node.id === match.params.userId )} />
                 )} /></div></div>
               }}
             </Query>
