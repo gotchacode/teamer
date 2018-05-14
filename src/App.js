@@ -36,25 +36,11 @@ class App extends Component {
     };
   }
 
-  apiRequest(org) {
-    const githubAPIURL = `https://api.github.com/orgs/${org}/members?client_id=2ee21061ca9ec6085e38&client_secret=f0f906d1f5f02623a010884370655da4595d301d`;
-    const self = this;
-    fetch(githubAPIURL).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      // make we don't both with 404 results
-      if (typeof (json) === 'object' && json.message !== "Not Found") {
-        self.setState({'github': json});
-      }
-    });
-  }
-
   handleSearchChange(event)  {
     // set it all empty when a new org is searched
     this.setState({'github': []});
     let org = event.target.value;
     this.setState({orgName: org });
-    this.apiRequest(org);
   }
 
   render() {
@@ -72,7 +58,6 @@ class App extends Component {
       console.log(thinTeams);
     }
     let organization_name = this.state.orgName;
-    console.log('orgName', this.state.orgName);
 
     return (
       <Router>
