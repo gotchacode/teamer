@@ -13,15 +13,16 @@ This project is built using following:
 - React
 - React Router
 - GraphQL
-- Apollo Client 
+- Apollo Client
 
 
 All the API calls to Github is made using Github GraphQL API V4.
 
 ## Installation
 
-`npm install` to run the app.
-`npm test` to run the tests.
+`npm install` to install the dependencies,
+`npm test` to run the tests and
+`npm start` to run the app
 
 ## Authentication
 
