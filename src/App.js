@@ -31,32 +31,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      github: null,
       orgName: null,
     };
   }
 
   handleSearchChange(event)  {
     // set it all empty when a new org is searched
-    this.setState({'github': []});
-    let org = event.target.value;
-    this.setState({orgName: org });
+    this.setState({orgName: event.target.value });
   }
 
   render() {
-    // this contains a lot of data, we don't need to pass the whole damn thing.
-    const teams = this.state.github;
-    let thinTeams = [];
-    if (teams !== null) {
-      teams.forEach((member, item)=> {
-        thinTeams.push({
-          'login': member.login,
-          'id': member.id
-        })
-      });
-
-      console.log(thinTeams);
-    }
     let organization_name = this.state.orgName;
 
     return (

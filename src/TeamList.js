@@ -7,10 +7,6 @@ export default class TeamList extends Component {
     const teamListContainer = [];
 
     if (teams) {
-      //teams.forEach((node, key) => {
-      //  console.log(node.node.name);
-      //});
-
       teams.forEach((node, key) => {
         const avatar = node.node.avatarUrl + '&s=30';
         let username = node.node.name ? node.node.name: node.node.login;

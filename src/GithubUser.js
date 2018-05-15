@@ -27,7 +27,6 @@ query($id: ID!) {
 
 export default class GithubUser extends Component {
   render() {
-    debugger;
     return (
       <Fragment>
         { this.props.user &&
