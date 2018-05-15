@@ -33,7 +33,7 @@ export default class GithubUser extends Component {
         <Query query={USER} variables={{ "id": this.props.user.node.id }}>
            {({data, error, loading}) => {
             if (error) return <span>Something went wrong..!</span>
-            if (loading || !data) return <span>...Loading..</span>
+            if (loading || !data) return <span>Loading User details...</span>
             if (!loading && data) return <UserDetail user={data.node} />
            }}
         </Query>
