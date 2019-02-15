@@ -23,8 +23,12 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .avatar-image {
@@ -36,7 +40,7 @@
 
 .team-list {
   list-style: none;
-} 
+}
 
 .team-display-container {
   margin-top: 40px;
@@ -45,5 +49,5 @@
 .app-header {
   margin-top: 20px;
   margin-bottom: 20px;
-  font-family: Helvetica, 'sans-serif';
+  font-family: Helvetica, "sans-serif";
 }
